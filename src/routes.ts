@@ -4,8 +4,8 @@ import UserController from "./controllers/UserController";
 
 const routes = Router();
 
-routes.get("/usuarios", UserController.buscarUsuarios);
+routes.get("/usuarios", UserController.index);
 
-routes.get("/empresas", CompanieController.buscarEmpresas);
+routes.get("/empresas", CompanieController.index);
 
 export { routes };

@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN_GERAL
+  ADMIN_EMPRESA
+}
+
+model Adress {
+  id         Int        @id @default(autoincrement())
+  road       String?
+  district   String?
+  city       String?
+  cep        String?
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  companie   Companie[]
+
+  @@map("adresses")
+}
+
+model Companie {
+  id             Int        @id @default(autoincrement())
+  corporate_name String
+  cnpj           String     @unique
+  contact_numer  String
+  user           User[]
+  adress_id      Int
+  adress         Adress     @relation(fields: [adress_id], references: [id])
+  employees      Employee[]
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+
+  @@map("companies")
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  username    String
+  password    String
+  companie_id Int?
+  companie    Companie? @relation(fields: [companie_id], references: [id])
+  role        Role      @default(USER)
+  status      Boolean   @default(true)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Employee {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  registration       String               @unique
+  admission_date     DateTime
+  pis                String?
+  companie_id        Int
+  companie           Companie             @relation(fields: [companie_id], references: [id])
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  RecordDigitalPoint RecordDigitalPoint[]
+
+  @@map("employees")
+}
+
+model RecordDigitalPoint {
+  id           Int      @id @default(autoincrement())
+  registration String
+  employee     Employee @relation(fields: [registration], references: [registration])
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  @@map("record_digital_points")
+}

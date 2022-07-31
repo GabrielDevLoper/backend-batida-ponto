@@ -1,23 +1,24 @@
 import { Request, Response } from "express";
 class CompanieController {
-    buscarEmpresas(req: Request, res: Response) {
-        const empresas = [
-            {
-                nome: "objetiva"
-            },
-            {
-                nome: "cgj"
-            },
-            {
-                nome: "carajas"
-            },
-            {
-                nome: "bompreco"
-            },
-        ];
+    async index(req: Request, res: Response){
 
-        return res.json({ empresas });
+    }
+
+    async store(req: Request, res: Response){
+
+    }
+
+    async update(req: Request, res: Response){
+
+    }
+    
+    async delete(req: Request, res: Response){
+
+    }
+
+    async show(req: Request, res: Response){
+
     }
 }
 
-export default new CompanieController(); // SINGLETON
+export default new CompanieController(); 
