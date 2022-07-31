@@ -46,7 +46,7 @@ model Companie {
 
 model User {
   id          Int       @id @default(autoincrement())
-  username    String
+  username    String    @unique
   password    String
   companie_id Int?
   companie    Companie? @relation(fields: [companie_id], references: [id])
