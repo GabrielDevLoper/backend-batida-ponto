@@ -8,6 +8,4 @@ server.use(express.json());
 server.use(cors());
 server.use(routes);
 
-server.listen(3333, () => {
-    console.log("Servidor executando na porta 3333");
-});
+export { server }
