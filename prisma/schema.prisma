@@ -35,11 +35,11 @@ model Companie {
   cnpj           String     @unique
   contact_numer  String
   user           User[]
-  adress_id      Int
-  adress         Adress     @relation(fields: [adress_id], references: [id])
+  adress_id      Int?
+  adress         Adress?    @relation(fields: [adress_id], references: [id])
   employees      Employee[]
   created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt
+  updated_at     DateTime?  @updatedAt
 
   @@map("companies")
 }

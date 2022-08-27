@@ -1,22 +1,21 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { prismaClient } from "../database/prismaCient";
-import { prisma } from ".prisma/client";
+import { prismaClient } from "../database/prismaClient";
 
 class UsuarioController {
 
-    async index(req: Request, res: Response){
+    async index(req: Request, res: Response) {
         try {
             const users = await prismaClient.user.findMany();
 
             return res.json(users);
         } catch (error) {
-            return res.json({message: "Não foi possível realizar a busca dos usuários."});
+            return res.status(400).json({ message: "Não foi possível realizar a busca dos usuários." });
         }
     }
 
-    async store(req: Request, res: Response){
-        const { username, password, companie_id} = req.body;
+    async store(req: Request, res: Response) {
+        const { username, password } = req.body;
 
         const userAlreadyExists = await prismaClient.user.findUnique({
             where: {
@@ -24,24 +23,23 @@ class UsuarioController {
             }
         });
 
-        if(userAlreadyExists){
-            return res.json({message: "Username já utilizado."})
+        if (userAlreadyExists) {
+            return res.status(400).json({ message: "Username já utilizado." })
         }
 
         const user = await prismaClient.user.create({
             data: {
                 username,
                 password: bcrypt.hashSync(password, 8),
-                companie_id,
             }
         });
 
         return res.status(201).json(user);
     }
 
-    async update(req: Request, res: Response){
+    async update(req: Request, res: Response) {
         const { id } = req.params;
-        const { username, password, companie_id} = req.body;
+        const { username, password, companie_id } = req.body;
 
         const verifyUserExists = await prismaClient.user.findUnique({
             where: {
@@ -49,8 +47,8 @@ class UsuarioController {
             }
         });
 
-        if(!verifyUserExists){
-            return res.json({ message: "Usuário não encontrado" });
+        if (!verifyUserExists) {
+            return res.status(404).json({ message: "User not found" });
         }
 
         await prismaClient.user.update({
@@ -58,16 +56,16 @@ class UsuarioController {
                 id: verifyUserExists.id
             },
             data: {
-                username, 
-                password, 
+                username,
+                password,
                 companie_id
             }
         });
 
         return res.json(verifyUserExists);
     }
-    
-    async delete(req: Request, res: Response){
+
+    async delete(req: Request, res: Response) {
         const { id } = req.params;
 
         const verifyUserExists = await prismaClient.user.findUnique({
@@ -76,7 +74,7 @@ class UsuarioController {
             }
         });
 
-        if(!verifyUserExists){
+        if (!verifyUserExists) {
             return res.json({ message: "Usuário não encontrado" });
         }
 
@@ -90,11 +88,11 @@ class UsuarioController {
 
     }
 
-    async show(req: Request, res: Response){
+    async show(req: Request, res: Response) {
 
     }
 
-    async changeRole(req: Request, res: Response){
+    async changeRole(req: Request, res: Response) {
         const { id } = req.params;
 
         const { role } = req.body;
@@ -108,7 +106,7 @@ class UsuarioController {
             }
         });
 
-        return res.json({ message: "Cargo alterado com sucesso." });    
+        return res.json({ message: "Cargo alterado com sucesso." });
     }
 }
 

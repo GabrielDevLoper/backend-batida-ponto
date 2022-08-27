@@ -1,11 +1,7 @@
-import express from "express"
-import cors from "cors";
-import { routes } from "./routes";
+import { app } from "./app";
 
-const server = express();
+const PORT = process.env.PORT;
 
-server.use(express.json());
-server.use(cors());
-server.use(routes);
-
-export { server }
+app.listen(PORT, () => {
+    console.log(`Server is running in PORT: ${PORT}`);
+});
