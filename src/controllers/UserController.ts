@@ -10,6 +10,7 @@ class UsuarioController {
 
             return res.json(users);
         } catch (error) {
+            console.log(error);
             return res.status(400).json({ message: "Não foi possível realizar a busca dos usuários" });
         }
     }
@@ -85,10 +86,6 @@ class UsuarioController {
         });
 
         return res.json({ message: "Usuário deletado com sucesso." });
-
-    }
-
-    async show(req: Request, res: Response) {
 
     }
 

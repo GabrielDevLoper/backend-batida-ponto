@@ -12,5 +12,9 @@ routes.delete("/usuarios/:id", UserController.delete);
 
 
 routes.get("/empresas", CompanieController.index);
+routes.post("/empresas", CompanieController.store);
+routes.put("/empresas/:id", CompanieController.update);
+routes.delete("/empresas/:id", CompanieController.delete);
+
 
 export { routes };

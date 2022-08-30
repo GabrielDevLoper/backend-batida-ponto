@@ -33,7 +33,7 @@ model Companie {
   id             Int        @id @default(autoincrement())
   corporate_name String
   cnpj           String     @unique
-  contact_numer  String
+  contact_number String?
   user           User[]
   adress_id      Int?
   adress         Adress?    @relation(fields: [adress_id], references: [id])

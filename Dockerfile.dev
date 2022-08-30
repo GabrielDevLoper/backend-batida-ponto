@@ -2,9 +2,9 @@ FROM node:alpine
 
 WORKDIR /usr/app
 
-ADD package*.json ./
-ADD prisma ./prisma/
-ADD .env /usr/app/
+COPY package*.json ./
+COPY prisma ./prisma/
+COPY .env /usr/app/
 
 EXPOSE 3333
 
