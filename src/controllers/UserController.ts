@@ -10,7 +10,7 @@ class UsuarioController {
 
             return res.json(users);
         } catch (error) {
-            return res.status(400).json({ message: "Não foi possível realizar a busca dos usuários." });
+            return res.status(400).json({ message: "Não foi possível realizar a busca dos usuários" });
         }
     }
 
