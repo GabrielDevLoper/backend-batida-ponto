@@ -5,11 +5,15 @@
 import { app } from "../app";
 import request from "supertest";
 
+import { faker } from '@faker-js/faker';
+
+
 describe("User controller", () => {
+
     it("Should be able to create a new user", async () => {
         const response = await request(app).post("/usuarios").send({
-            username: "teste123",
-            password: "123",
+            username: faker.internet.userName(),
+            password: faker.internet.password(),
         });
 
         expect(response.status).toBe(201);
@@ -31,8 +35,8 @@ describe("User controller", () => {
 
     it("Should be able to update a user", async () => {
         const responseCreateUser = await request(app).post("/usuarios").send({
-            username: "teste update",
-            password: "123",
+            username: faker.internet.userName(),
+            password: faker.internet.password(),
         });
 
         expect(responseCreateUser.body).toHaveProperty("id");
@@ -41,7 +45,6 @@ describe("User controller", () => {
             username: "teste-upate-01",
             password: "123",
         });
-
 
         expect(responseUpdateUser.status).toBe(200);
     });
@@ -57,13 +60,13 @@ describe("User controller", () => {
 
     it("Should be able to delete a user", async () => {
         const responseCreateUser = await request(app).post("/usuarios").send({
-            username: "teste1234",
+            username: "teste ok123123",
             password: "123",
         });
 
-        const responseDeleteUser = await request(app).delete("/usuarios/" + responseCreateUser.body.id);
+        const response = await request(app).delete("/usuarios/" + responseCreateUser.body.id);
 
-        expect(responseDeleteUser.status).toBe(200);
+        expect(response.status).toBe(200);
     });
 
     it("Should be able to list all users", async () => {

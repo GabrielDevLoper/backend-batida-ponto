@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from "express"
 import cors from "cors";
 import { routes } from "./routes";
 
-import "dotenv/config"
+import "dotenv/config";
 
 const app = express();
 
