@@ -1,16 +1,19 @@
-export interface UserCreate {
+export interface UserCreateOrUpdate {
     username: string;
     password: string;
 }
 
-export interface UserSave {
+export interface User {
     id: number;
     username: string;
     password: string;
 }
 
 export interface IUserRepository {
-    save(data: UserCreate): Promise<UserSave>;
-    findByUserName(username: string): Promise<UserSave | null>;
-    findAll(): Promise<UserSave[] | null>
+    save(data: UserCreateOrUpdate): Promise<User>;
+    findByUserName(username: string): Promise<User | null>;
+    findAll(): Promise<User[] | null>;
+    findById(id: number): Promise<User | null>;
+    update(data: UserCreateOrUpdate, id: number): Promise<User>;
+    delete(id: number): Promise<User>;
 }

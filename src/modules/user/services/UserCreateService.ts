@@ -1,13 +1,15 @@
-import { UserCreate } from "../repositories/IUserRepository";
+import { UserCreateOrUpdate } from "../repositories/IUserRepository";
 import { UserPrismaRepository } from "../repositories/UserPrismaRepository";
+import { AppError } from "../../../errors/AppError";
 import bcrypt from "bcryptjs";
-
 
 class UserCreateService {
     constructor(private userRepository: UserPrismaRepository) { };
 
-    async execute({ username, password }: UserCreate) {
-        await this.verifyUserExists(username);
+    async execute({ username, password }: UserCreateOrUpdate) {
+        if (await this.userRepository.findByUserName(username)) {
+            throw new AppError("Usuário já cadastrado na base.", 400);
+        }
 
         const userCreated = await this.userRepository.save({
             username,
@@ -16,14 +18,6 @@ class UserCreateService {
 
 
         return userCreated;
-    }
-
-    async verifyUserExists(username: string) {
-        const userExists = await this.userRepository.findByUserName(username);
-
-        if (userExists) {
-            throw new Error("Usuário já existe!");
-        }
     }
 }
 
