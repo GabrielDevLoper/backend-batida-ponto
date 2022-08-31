@@ -4,14 +4,14 @@ import { AppError } from "../../../errors/AppError";
 import bcrypt from "bcryptjs";
 
 class UserCreateService {
-    constructor(private userRepository: UserPrismaRepository) { };
+    constructor(private userPrismaRepository: UserPrismaRepository) { };
 
     async execute({ username, password }: UserCreateOrUpdate) {
-        if (await this.userRepository.findByUserName(username)) {
+        if (await this.userPrismaRepository.findByUserName(username)) {
             throw new AppError("Usuário já cadastrado na base.", 400);
         }
 
-        const userCreated = await this.userRepository.save({
+        const userCreated = await this.userPrismaRepository.save({
             username,
             password: bcrypt.hashSync(password, 8)
         });
