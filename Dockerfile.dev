@@ -1,10 +1,8 @@
-FROM node:alpine
+FROM node:16
 
 WORKDIR /usr/app
 
-COPY package*.json ./
-COPY prisma ./prisma/
-COPY .env /usr/app/
+COPY . ./
 
 EXPOSE 3333
 
