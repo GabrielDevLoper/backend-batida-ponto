@@ -10,7 +10,7 @@ class UserPrismaRepository implements IUserRepository {
         return user;
     }
 
-    findByUserName(username: string): Promise<User | null> {
+    findByUserName(username: string): Promise<User | undefined | null> {
         const user = prismaClient.user.findUnique({
             where: {
                 username
@@ -26,7 +26,7 @@ class UserPrismaRepository implements IUserRepository {
         return users
     }
 
-    findById(id: number): Promise<User | null> {
+    findById(id: number): Promise<User | undefined | null> {
         const user = prismaClient.user.findUnique({
             where: {
                 id
