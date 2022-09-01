@@ -1,16 +1,15 @@
 import { AppError } from "../../../errors/AppError";
-import { CompaniePrismaRepository } from "../repositories/CompaniePrismaRepository";
-import { CompanieCreateOrUpdate } from "../repositories/ICompanieRepository";
+import { CompanieCreateOrUpdate, ICompanieRepository } from "../repositories/ICompanieRepository";
 
 class CompanieUpdateService {
-    constructor(private companiePrismaRepository: CompaniePrismaRepository) { }
+    constructor(private companieRepository: ICompanieRepository) { }
 
     async execute(data: CompanieCreateOrUpdate, id: number) {
-        if (!await this.companiePrismaRepository.findById(id)) {
+        if (!await this.companieRepository.findById(id)) {
             throw new AppError("Empresa não encontrada", 404);
         }
 
-        const companieUpdated = await this.companiePrismaRepository.update(data, id);
+        const companieUpdated = await this.companieRepository.update(data, id);
 
         return companieUpdated;
     }

@@ -1,7 +1,7 @@
 import { prismaClient } from "../../../database/prismaClient";
-import { Companie, CompanieCreateOrUpdate, ICompanyRepository } from "./ICompanieRepository";
+import { Companie, CompanieCreateOrUpdate, ICompanieRepository } from "./ICompanieRepository";
 
-class CompaniePrismaRepository implements ICompanyRepository {
+class CompaniePrismaRepository implements ICompanieRepository {
     save(data: CompanieCreateOrUpdate): Promise<Companie> {
         const companie = prismaClient.companie.create({
             data

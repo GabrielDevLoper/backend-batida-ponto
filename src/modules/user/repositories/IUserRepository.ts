@@ -14,6 +14,6 @@ export interface IUserRepository {
     findByUserName(username: string): Promise<User | undefined | null>;
     findAll(): Promise<User[] | null>;
     findById(id: number): Promise<User | undefined | null>;
-    update(data: UserCreateOrUpdate, id: number): Promise<User>;
+    update(data: UserCreateOrUpdate, id: number): Promise<User | undefined>;
     delete(id: number): Promise<User | undefined>;
 }

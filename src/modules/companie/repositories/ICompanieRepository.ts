@@ -10,7 +10,7 @@ export interface Companie {
     cnpj: string;
 }
 
-export interface ICompanyRepository {
+export interface ICompanieRepository {
     save(data: CompanieCreateOrUpdate): Promise<Companie>;
     findByCNPJ(cnpj: string): Promise<Companie | null>;
     findAll(): Promise<Companie[] | null>;

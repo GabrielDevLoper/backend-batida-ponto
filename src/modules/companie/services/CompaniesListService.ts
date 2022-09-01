@@ -1,11 +1,12 @@
 import { CompaniePrismaRepository } from "../repositories/CompaniePrismaRepository";
+import { ICompanieRepository } from "../repositories/ICompanieRepository";
 
 
 class CompaniesListService {
-    constructor(private companiePrismaRepository: CompaniePrismaRepository) { }
+    constructor(private companieRepository: ICompanieRepository) { }
 
     async execute() {
-        const companies = await this.companiePrismaRepository.findAll();
+        const companies = await this.companieRepository.findAll();
 
         return companies;
     }

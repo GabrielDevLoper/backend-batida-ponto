@@ -1,16 +1,19 @@
 import { AppError } from "../../../errors/AppError";
-import { UserCreateOrUpdate } from "../repositories/IUserRepository";
-import { UserPrismaRepository } from "../repositories/UserPrismaRepository";
+import { IUserRepository, UserCreateOrUpdate } from "../repositories/IUserRepository";
+import bcrypt from "bcryptjs";
 
 class UserUpdateService {
-    constructor(private userPrismaRepository: UserPrismaRepository) { }
+    constructor(private userRepository: IUserRepository) { }
 
     async execute(data: UserCreateOrUpdate, id: number) {
-        if (!await this.userPrismaRepository.findById(id)) {
+        if (!await this.userRepository.findById(id)) {
             throw new AppError("Usuário não encontrado.", 404);
         }
 
-        const user = await this.userPrismaRepository.update(data, id);
+        const user = await this.userRepository.update({
+            username: data.username,
+            password: bcrypt.hashSync(data.password, 8)
+        }, id);
 
         return user;
     }

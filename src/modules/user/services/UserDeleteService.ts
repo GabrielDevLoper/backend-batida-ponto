@@ -1,15 +1,15 @@
 import { AppError } from "../../../errors/AppError";
-import { UserPrismaRepository } from "../repositories/UserPrismaRepository";
+import { IUserRepository } from "../repositories/IUserRepository";
 
 class UserDeleteService {
-    constructor(private userPrismaRepository: UserPrismaRepository) { }
+    constructor(private userRepository: IUserRepository) { }
 
     async execute(id: number) {
-        if (!await this.userPrismaRepository.findById(id)) {
+        if (!await this.userRepository.findById(id)) {
             throw new AppError("Usuário não encontrado", 404);
         }
 
-        const userDeleted = await this.userPrismaRepository.delete(id);
+        const userDeleted = await this.userRepository.delete(id);
 
         return userDeleted;
     }

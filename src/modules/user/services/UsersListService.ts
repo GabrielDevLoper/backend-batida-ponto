@@ -1,7 +1,7 @@
-import { UserPrismaRepository } from "../repositories/UserPrismaRepository";
+import { IUserRepository } from "../repositories/IUserRepository";
 
 class UsersListService {
-    constructor(private userRepository: UserPrismaRepository) { };
+    constructor(private userRepository: IUserRepository) { };
 
     async execute() {
         const users = await this.userRepository.findAll();
