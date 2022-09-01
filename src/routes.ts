@@ -1,9 +1,8 @@
-import { Router } from "express";
-import CompanieController from "./controllers/CompanieController";
-import UserController from "./modules/user/UserController";
+// import CompanieController from "./controllers/CompanieController";
 // import UserController from "./controllers/UserController";
-
-
+import { Router } from "express";
+import CompanieController from "./modules/companie/CompanieController";
+import UserController from "./modules/user/UserController";
 
 const routes = Router();
 
