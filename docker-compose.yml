@@ -14,15 +14,11 @@ services:
       - "3333:3333"
     depends_on:
       - postgres
-    command: bash -c "
-      npm run migrate &&
-      npm run generate &&
-      npm run dev"
-     
+    command: bash -c "npm run migrate && npm run generate && npm run dev"
+
   postgres:
-    image: postgres:13
+    image: postgres:14
     container_name: postgres
-    restart: always
     ports:
       - "5432:5432"
     networks:

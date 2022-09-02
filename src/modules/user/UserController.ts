@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { UserPrismaRepository } from "./repositories/UserPrismaRepository";
+import { UserPrismaRepository } from "./repositories/prisma/UserPrismaRepository";
 import { UserCreateService } from "./services/UserCreateService";
 import { UserDeleteService } from "./services/UserDeleteService";
 import { UsersListService } from "./services/UsersListService";
 import { UserUpdateService } from "./services/UserUpdateService";
 
+const userPrismaRepository = new UserPrismaRepository();
 class UserController {
   async index(req: Request, res: Response) {
-    const userPrismaRepository = new UserPrismaRepository();
     const usersListService = new UsersListService(userPrismaRepository);
 
     const result = await usersListService.execute();
@@ -18,7 +18,6 @@ class UserController {
   async store(req: Request, res: Response) {
     const { username, password } = req.body;
 
-    const userPrismaRepository = new UserPrismaRepository();
     const userCreateService = new UserCreateService(userPrismaRepository);
 
     const result = await userCreateService.execute({
@@ -38,7 +37,6 @@ class UserController {
       password,
     };
 
-    const userPrismaRepository = new UserPrismaRepository();
     const userUpdateService = new UserUpdateService(userPrismaRepository);
 
     const userUpdated = await userUpdateService.execute(data, Number(id));
@@ -49,7 +47,6 @@ class UserController {
   async delete(req: Request, res: Response) {
     const { id } = req.params;
 
-    const userPrismaRepository = new UserPrismaRepository();
     const userDeleteService = new UserDeleteService(userPrismaRepository);
 
     const result = await userDeleteService.execute(Number(id));

@@ -9,7 +9,7 @@
     "start": "node dist/src/server.js",
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
-    "dev": "tsnd --respawn --transpile-only --exit-child --watch src src/server.ts"
+    "dev": "ts-node-dev --respawn --inspect --transpile-only --exit-child --ignore-watch node_modules --watch src src/server.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.1.1",

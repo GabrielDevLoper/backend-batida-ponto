@@ -1,38 +1,42 @@
+import { faker } from "@faker-js/faker";
 import { UserInMemoryRepository } from "../repositories/in-memory/UserInMemoryRepository";
+import { User } from "../repositories/IUserRepository";
 import { UserCreateService } from "./UserCreateService";
-import { faker } from '@faker-js/faker/locale/pt_BR';
-import { AppError } from "../../../errors/AppError";
+import { UsersListService } from "./UsersListService";
 
 let userInMemoryRepository: UserInMemoryRepository;
+let userListService: UsersListService;
 let userCreateService: UserCreateService;
 
-describe("Create user service", () => {
 
+
+describe('User list service', () => {
     beforeAll(() => {
         userInMemoryRepository = new UserInMemoryRepository();
+        userListService = new UsersListService(userInMemoryRepository);
         userCreateService = new UserCreateService(userInMemoryRepository);
     });
 
-    it("Should be able to create new a user", async () => {
-        const data = {
+    it("Should be able to list all users", async () => {
+        const user1 = {
             username: faker.internet.userName(),
             password: faker.internet.password()
         }
 
-        const result = await userCreateService.execute(data);
-
-        expect(result).toHaveProperty("id");
-    });
-
-    it("Should be not able to create a new user existing", async () => {
-        const user = {
+        const user2 = {
             username: faker.internet.userName(),
             password: faker.internet.password()
         }
 
-        await userCreateService.execute(user);
+        await userCreateService.execute(user1);
 
-        await expect(userCreateService.execute(user)).rejects.toEqual(new AppError("Usuário já cadastrado na base.", 400));
+        await userCreateService.execute(user2);
+
+        const users = await userListService.execute();
+
+
+        expect(users).toHaveLength(2);
     });
 
-});
+
+})

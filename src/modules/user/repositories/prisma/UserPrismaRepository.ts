@@ -1,5 +1,5 @@
-import { prismaClient } from "../../../database/prismaClient";
-import { IUserRepository, UserCreateOrUpdate, User } from "./IUserRepository";
+import { prismaClient } from "../../../../database/prismaClient";
+import { IUserRepository, UserCreateOrUpdate, User } from "../IUserRepository";
 
 class UserPrismaRepository implements IUserRepository {
     save(data: UserCreateOrUpdate): Promise<User> {

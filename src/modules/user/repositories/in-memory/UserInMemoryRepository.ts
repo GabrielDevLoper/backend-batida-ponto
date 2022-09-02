@@ -1,9 +1,9 @@
-import { IUserRepository, User, UserCreateOrUpdate } from "./IUserRepository";
+import { IUserRepository, User, UserCreateOrUpdate } from "../IUserRepository";
 import { randomInt } from "crypto";
 
 
 class UserInMemoryRepository implements IUserRepository {
-    users: User[] = [];
+    private users: User[] = [];
 
     async save(data: UserCreateOrUpdate): Promise<User> {
         const id = randomInt(50);
@@ -18,7 +18,9 @@ class UserInMemoryRepository implements IUserRepository {
         return user;
     }
     async findByUserName(username: string): Promise<User | undefined | null> {
-        return this.users.find(user => user.username === username);
+        const user = this.users.find(user => user.username === username);
+
+        return user;
     }
     async findAll(): Promise<User[] | null> {
         const users = this.users.map(user => user);
@@ -26,7 +28,9 @@ class UserInMemoryRepository implements IUserRepository {
         return users;
     }
     async findById(id: number): Promise<User | undefined | null> {
-        return this.users.find(user => user.id === id);
+        const user = this.users.find(user => user.id === id);
+
+        return user;
     }
     async update(data: UserCreateOrUpdate, id: number): Promise<User | undefined> {
         const userIndex = this.users.findIndex((index => index.id === id));
@@ -46,7 +50,7 @@ class UserInMemoryRepository implements IUserRepository {
         const users = this.users.splice(0, userIndex);
         this.users = users;
 
-        return userDeleted;
+        return this.users[userIndex] === undefined ? userDeleted : undefined;
     }
 }
 
