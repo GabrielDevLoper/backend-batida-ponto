@@ -9,16 +9,11 @@ export class CreateUserController {
     async handle(req: Request, res: Response): Promise<Response> {
         const { username, password } = req.body;
 
-        try {
-            const user = await this.createUserService.execute({
-                password,
-                username
-            });
+        const user = await this.createUserService.execute({
+            password,
+            username
+        });
 
-            return res.status(201).json(user);
-        } catch (error) {
-            throw new AppError("Erro ao cadastrar usuário.", 400);
-        }
-
+        return res.status(201).json(user);
     }
 }

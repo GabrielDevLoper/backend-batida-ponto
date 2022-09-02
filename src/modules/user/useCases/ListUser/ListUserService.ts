@@ -1,6 +1,6 @@
-import { IUserRepository } from "../repositories/IUserRepository";
+import { IUserRepository } from "../../repositories/IUserRepository";
 
-class UsersListService {
+class ListUserService {
     constructor(private userRepository: IUserRepository) { };
 
     async execute() {
@@ -11,4 +11,4 @@ class UsersListService {
 }
 
 
-export { UsersListService };
+export { ListUserService }
