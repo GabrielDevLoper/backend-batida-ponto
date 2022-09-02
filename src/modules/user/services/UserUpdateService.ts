@@ -1,11 +1,12 @@
 import { AppError } from "../../../errors/AppError";
-import { IUserRepository, UserCreateOrUpdate } from "../repositories/IUserRepository";
+import { IUserRepository, IUser } from "../repositories/IUserRepository";
 import bcrypt from "bcryptjs";
+import { ICreateUserRequestDTO } from "../useCases/CreateUser/CreateUserDTO";
 
 class UserUpdateService {
     constructor(private userRepository: IUserRepository) { }
 
-    async execute(data: UserCreateOrUpdate, id: number) {
+    async execute(data: ICreateUserRequestDTO, id: number) {
         if (!await this.userRepository.findById(id)) {
             throw new AppError("Usuário não encontrado.", 404);
         }

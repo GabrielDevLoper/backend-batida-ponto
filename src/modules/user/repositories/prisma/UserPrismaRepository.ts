@@ -1,8 +1,10 @@
 import { prismaClient } from "../../../../database/prismaClient";
-import { IUserRepository, UserCreateOrUpdate, User } from "../IUserRepository";
+// import { User } from "../../../../models/User";
+import { ICreateUserRequestDTO } from "../../useCases/CreateUser/CreateUserDTO";
+import { IUser, IUserRepository } from "../IUserRepository";
 
 class UserPrismaRepository implements IUserRepository {
-    save(data: UserCreateOrUpdate): Promise<User> {
+    save(data: ICreateUserRequestDTO): Promise<IUser> {
         const user = prismaClient.user.create({
             data
         });
@@ -10,7 +12,7 @@ class UserPrismaRepository implements IUserRepository {
         return user;
     }
 
-    findByUserName(username: string): Promise<User | undefined | null> {
+    findByUserName(username: string): Promise<IUser | undefined | null> {
         const user = prismaClient.user.findUnique({
             where: {
                 username
@@ -20,13 +22,13 @@ class UserPrismaRepository implements IUserRepository {
         return user;
     }
 
-    findAll(): Promise<User[] | null> {
+    findAll(): Promise<IUser[] | null> {
         const users = prismaClient.user.findMany();
 
         return users
     }
 
-    findById(id: number): Promise<User | undefined | null> {
+    findById(id: number): Promise<IUser | undefined | null> {
         const user = prismaClient.user.findUnique({
             where: {
                 id
@@ -36,7 +38,7 @@ class UserPrismaRepository implements IUserRepository {
         return user;
     }
 
-    update({ username, password }: UserCreateOrUpdate, id: number): Promise<User> {
+    update({ username, password }: ICreateUserRequestDTO, id: number): Promise<IUser> {
         const user = prismaClient.user.update({
             where: {
                 id
@@ -50,7 +52,7 @@ class UserPrismaRepository implements IUserRepository {
         return user;
     }
 
-    delete(id: number): Promise<User> {
+    delete(id: number): Promise<IUser> {
         const userDeleted = prismaClient.user.delete({
             where: {
                 id

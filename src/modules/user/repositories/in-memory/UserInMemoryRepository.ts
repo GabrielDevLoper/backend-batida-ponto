@@ -1,11 +1,13 @@
-import { IUserRepository, User, UserCreateOrUpdate } from "../IUserRepository";
+import { IUserRepository } from "../IUserRepository";
 import { randomInt } from "crypto";
+import { User } from "../../../../models/User";
+import { ICreateUserRequestDTO } from "../../useCases/CreateUser/CreateUserDTO";
 
 
 class UserInMemoryRepository implements IUserRepository {
     private users: User[] = [];
 
-    async save(data: UserCreateOrUpdate): Promise<User> {
+    async save(data: ICreateUserRequestDTO): Promise<User> {
         const id = randomInt(50);
 
         const user: User = {
@@ -32,7 +34,7 @@ class UserInMemoryRepository implements IUserRepository {
 
         return user;
     }
-    async update(data: UserCreateOrUpdate, id: number): Promise<User | undefined> {
+    async update(data: ICreateUserRequestDTO, id: number): Promise<User | undefined> {
         const userIndex = this.users.findIndex((index => index.id === id));
 
         this.users[userIndex].username = data.username;

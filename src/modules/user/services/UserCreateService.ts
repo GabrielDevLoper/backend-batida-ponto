@@ -1,12 +1,12 @@
-import { IUserRepository, UserCreateOrUpdate } from "../repositories/IUserRepository";
-import { UserPrismaRepository } from "../repositories/prisma/UserPrismaRepository";
+import { IUserRepository } from "../repositories/IUserRepository";
 import { AppError } from "../../../errors/AppError";
 import bcrypt from "bcryptjs";
+import { ICreateUserRequestDTO } from "../useCases/CreateUser/CreateUserDTO";
 
 class UserCreateService {
     constructor(private userRepository: IUserRepository) { };
 
-    async execute({ username, password }: UserCreateOrUpdate) {
+    async execute({ username, password }: ICreateUserRequestDTO) {
         const userAlreadyExists = await this.userRepository.findByUserName(username);
 
         if (userAlreadyExists) {

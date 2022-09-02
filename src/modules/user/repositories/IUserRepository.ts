@@ -1,19 +1,15 @@
-export interface UserCreateOrUpdate {
-    username: string;
-    password: string;
-}
+import { ICreateUserRequestDTO } from "../useCases/CreateUser/CreateUserDTO";
 
-export interface User {
-    id: number;
+export interface IUser {
     username: string;
     password: string;
 }
 
 export interface IUserRepository {
-    save(data: UserCreateOrUpdate): Promise<User>;
-    findByUserName(username: string): Promise<User | undefined | null>;
-    findAll(): Promise<User[] | null>;
-    findById(id: number): Promise<User | undefined | null>;
-    update(data: UserCreateOrUpdate, id: number): Promise<User | undefined>;
-    delete(id: number): Promise<User | undefined>;
+    save(data: ICreateUserRequestDTO): Promise<IUser>;
+    findByUserName(username: string): Promise<IUser | undefined | null>;
+    findAll(): Promise<IUser[] | null>;
+    findById(id: number): Promise<IUser | undefined | null>;
+    update(data: ICreateUserRequestDTO, id: number): Promise<IUser | undefined>;
+    delete(id: number): Promise<IUser | undefined>;
 }

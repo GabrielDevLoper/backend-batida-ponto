@@ -39,8 +39,6 @@ describe("User controller", () => {
             password: faker.internet.password(),
         });
 
-        expect(responseCreateUser.body).toHaveProperty("id");
-
         const responseUpdateUser = await request(app).put("/usuarios/" + responseCreateUser.body.id).send({
             username: "teste-upate-01",
             password: "123",
